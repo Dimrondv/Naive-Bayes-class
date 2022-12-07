@@ -1,17 +1,18 @@
 import numpy as np
-
 from nbc import DescretenaiveBayes 
+
+# http://archive.ics.uci.edu/ml/datasets/Statlog+%28Landsat+Satellite%29
 
 def read_vine_data(filepath):
     D = np.genfromtxt(filepath, delimiter=",")
-    y = D[:, 0].astype(np.int8)
+    y = D[:, ].astype(np.int8)
     X = D[:, 1:]
     return X, y 
 
 def read_covertype_data(filepath):
     D = np.genfromtxt(filepath, delimiter=" ")
-    y = D[:, 0].astype(np.int8)
-    X = D[:, 1:]
+    y = D[:, 36].astype(np.int8)
+    X = D[:, 1:35]
     return X, y 
 
 def train_test_split(X, y, train_ratio=0.75, seed=0):
@@ -38,8 +39,7 @@ def discretize(X, bins=5, mins_ref=None, maxes_ref=None):
     
 
 
-data = "./covtype.data"
-data2 = "./drug_consumption.data"
+
 data3 = "./wine.data"
 data4 ="./sat.tst"
 BINS = 5
@@ -52,7 +52,7 @@ X_d_train, mins_ref, maxes_ref = discretize(X_train, BINS)
 X_d_test, _, _ = discretize(X_test, bins=BINS, mins_ref=mins_ref, maxes_ref=maxes_ref)
 n = X_train.shape[1]
 domain_sizes = BINS * np.ones(n, dtype=np.int8)
-clf = DescretenaiveBayes(domain_sizes, laplace=False, safe_count=True)
+clf = DescretenaiveBayes(domain_sizes, laplace=False, safe_count=False)
 clf.fit(X_d_train, y_train)
 print(clf.PY_)
 predictions = clf.predict(X_d_test)
