@@ -12,7 +12,7 @@ def read_vine_data(filepath):
 def read_covertype_data(filepath):
     D = np.genfromtxt(filepath, delimiter=" ")
     y = D[:, 36].astype(np.int8)
-    X = D[:, 1:35]
+    X = D[:, 0:35]
     return X, y 
 
 def train_test_split(X, y, train_ratio=0.75, seed=0):
